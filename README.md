@@ -33,6 +33,9 @@ translations/
 ├── russian/          # Russian translations
 │   ├── Badges_ru.json
 │   └── ...
+├── pirate/           # Pirate translations
+│   ├── Badges_pir.json
+│   └── ...
 └── .scripts/         # Validation scripts
     └── validate-translations.js
 ```
@@ -43,6 +46,7 @@ translations/
 - **French** (`fr`)
 - **Spanish** (`es`)
 - **Russian** (`ru`)
+- **Pirate** (`pir`)
 
 If you'd like another language supported, please reach out to our team on discord. We're happy to onboard new languages!
 
@@ -126,6 +130,7 @@ Each language folder has a `CODEOWNERS` file that automatically requests review 
 - `french/` → `@proofreader-french`
 - `spanish/` → `@proofreader-spanish`
 - `russian/` → `@proofreader-russian`
+- `pirate/` → `@proofreader-pirate`
 
 When you modify files in a language folder, the corresponding proofreader team will be automatically requested as a reviewer. Feel free to ask people from this team to review if you don't get a response on github within a few days.
 
@@ -144,6 +149,7 @@ Translation files follow this naming pattern:
   - `Game_fr.json` (French)
   - `Game_es.json` (Spanish)
   - `Game_ru.json` (Russian)
+  - `Game_pir.json` (Pirate)
 
 ## Translation Categories
 

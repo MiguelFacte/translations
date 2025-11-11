@@ -42,6 +42,9 @@ jobs:
           if echo "$CHANGED_FILES" | grep -q "^russian/"; then
             CHANGED_LANGS+=("russian")
           fi
+          if echo "$CHANGED_FILES" | grep -q "^pirate/"; then
+            CHANGED_LANGS+=("pirate")
+          fi
           
           # Convert to JSON array
           if [ ${#CHANGED_LANGS[@]} -eq 0 ]; then
@@ -74,7 +77,8 @@ jobs:
               'english': 'proofreader-english',
               'french': 'proofreader-french',
               'spanish': 'proofreader-spanish',
-              'russian': 'proofreader-russian'
+              'russian': 'proofreader-russian',
+              'pirate': 'proofreader-pirate'
             };
             
             // Get PR author to exclude from reviewer selection

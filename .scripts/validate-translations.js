@@ -74,9 +74,9 @@ function extractLanguageCode(langDir) {
     return null;
   }
   
-  // Extract language code from first file (e.g., "Game_fr.json" -> "fr")
+  // Extract language code from first file (e.g., "Game_fr.json" -> "fr", "Game_pir.json" -> "pir")
   const firstFile = files[0];
-  const match = firstFile.match(/_([a-z]{2})\.json$/i);
+  const match = firstFile.match(/_([a-z]{2,3})\.json$/i);
   return match ? match[1] : null;
 }
 
