@@ -85,6 +85,14 @@ jobs:
             });
             const prAuthor = pr.user.login;
             
+            // Get currently requested reviewers to check if we already have reviewers for each language
+            const { data: requestedReviewersData } = await github.rest.pulls.listRequestedReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+            const alreadyRequestedReviewers = requestedReviewersData.users.map(user => user.login);
+            
             // Always exclude BillyDotWS and the PR author
             const excludedUsers = ['BillyDotWS', prAuthor];
             
@@ -115,6 +123,19 @@ jobs:
                   org: context.repo.owner,
                   team_slug: teamSlug,
                 });
+                
+                // Check if there's already a reviewer from this team
+                const teamMemberLogins = members.map(m => m.login);
+                const existingReviewerForTeam = alreadyRequestedReviewers.find(reviewer => 
+                  teamMemberLogins.includes(reviewer)
+                );
+                
+                if (existingReviewerForTeam) {
+                  // Already have a reviewer for this language, skip requesting a new one
+                  const language = Object.keys(langToTeam).find(lang => langToTeam[lang] === teamSlug);
+                  console.log(`Skipping team ${teamSlug} (${language}): already has reviewer ${existingReviewerForTeam}`);
+                  continue;
+                }
                 
                 // Filter out excluded users (PR author and BillyDotWS)
                 const eligibleMembers = members.filter(member => 
