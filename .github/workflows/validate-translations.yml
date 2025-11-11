@@ -22,7 +22,7 @@ jobs:
         id: set-languages
         run: |
           # Get list of all language directories (excluding 'english')
-          ALL_LANGS=$(find . -maxdepth 1 -type d -not -path '.' -not -path './.git' -not -path './english' -not -path './.github' -not -path './scripts' -not -path './node_modules' | sed 's|^\./||' | sort | uniq)
+          ALL_LANGS=$(find . -maxdepth 1 -type d -not -path '.' -not -path './.git' -not -path './english' -not -path './.github' -not -path './.scripts' -not -path './node_modules' | sed 's|^\./||' | sort | uniq)
           
           # Get changed files
           if [ "${{ github.event_name }}" = "pull_request" ]; then
@@ -88,5 +88,5 @@ jobs:
           node-version: '20'
       
       - name: Validate ${{ matrix.language }} translations
-        run: node scripts/validate-translations.js ${{ matrix.language }}
+        run: node .scripts/validate-translations.js ${{ matrix.language }}
 
