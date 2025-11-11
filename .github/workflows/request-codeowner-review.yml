@@ -10,9 +10,11 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      issues: write
       # Note: This workflow uses a PAT_TOKEN secret that must have:
       # - read:org (to read team members)
       # - pull-requests:write (to request reviewers and comment)
+      # - issues:write (to create labels and add them to PRs)
       # Create a Personal Access Token and add it as a repository secret named 'PAT_TOKEN'
     steps:
       - uses: actions/checkout@v4
@@ -153,6 +155,54 @@ jobs:
                 console.error(`Error requesting review for team ${teamSlug}:`, error.message);
                 // Continue with other teams even if one fails
               }
+            }
+            
+            // Add labels for each changed language (create if they don't exist)
+            const languageLabels = changedLangs.map(lang => `language:${lang}`);
+            
+            // Get existing labels
+            let existingLabels = [];
+            try {
+              const { data: labels } = await github.rest.issues.listLabelsForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                per_page: 100,
+              });
+              existingLabels = labels.map(label => label.name);
+            } catch (error) {
+              console.error(`Error fetching existing labels:`, error.message);
+            }
+            
+            // Create labels that don't exist
+            for (const label of languageLabels) {
+              if (!existingLabels.includes(label)) {
+                try {
+                  await github.rest.issues.createLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    name: label,
+                    color: '0E8A16', // Green color for language labels
+                    description: `${label.split(':')[1]} translation files`,
+                  });
+                  console.log(`Created label: ${label}`);
+                } catch (error) {
+                  console.error(`Error creating label ${label}:`, error.message);
+                }
+              }
+            }
+            
+            // Add labels to the PR
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: languageLabels,
+              });
+              console.log(`Added labels: ${languageLabels.join(', ')}`);
+            } catch (error) {
+              console.error(`Error adding labels:`, error.message);
+              // Continue even if label addition fails
             }
             
             // Add a comment to the PR if reviewers were requested
