@@ -6,6 +6,7 @@ on:
       - 'english/**'
       - 'french/**'
       - 'spanish/**'
+      - 'russian/**'
       - '**/*.json'
 
 jobs:

@@ -4,6 +4,8 @@
 </br>
 Translation files for the Plexverse server. This repository contains all translation keys and their localized strings for multiple languages. We welcome anyone to contribute to translating the server, create a pull request with any changes you'd like to make!
 </br>
+</br>
+
 > [!NOTE]
 > Translations can take up to 24 hours to propagate to in-game servers after being merged.
 
@@ -28,6 +30,9 @@ translations/
 ├── spanish/          # Spanish translations
 │   ├── Badges_es.json
 │   └── ...
+├── russian/          # Russian translations
+│   ├── Badges_ru.json
+│   └── ...
 └── .scripts/         # Validation scripts
     └── validate-translations.js
 ```
@@ -37,6 +42,7 @@ translations/
 - **English** (`en`) - Base language, source of truth
 - **French** (`fr`)
 - **Spanish** (`es`)
+- **Russian** (`ru`)
 
 If you'd like another language supported, please reach out to our team on discord. We're happy to onboard new languages!
 
@@ -119,6 +125,7 @@ Each language folder has a `CODEOWNERS` file that automatically requests review 
 - `english/` → `@proofreader-english`
 - `french/` → `@proofreader-french`
 - `spanish/` → `@proofreader-spanish`
+- `russian/` → `@proofreader-russian`
 
 When you modify files in a language folder, the corresponding proofreader team will be automatically requested as a reviewer. Feel free to ask people from this team to review if you don't get a response on github within a few days.
 
@@ -136,6 +143,7 @@ Translation files follow this naming pattern:
   - `Game_en.json` (English)
   - `Game_fr.json` (French)
   - `Game_es.json` (Spanish)
+  - `Game_ru.json` (Russian)
 
 ## Translation Categories
 
